@@ -17,7 +17,10 @@ class AllUsers extends Component {
 		return (
 			<div>
 				{
-					users.map(user => <User item={user} key={user.id} onSelectUser={this.onSelectUser}/>)
+                    users.map(user => <User 
+                        item={user} 
+                        key={user.id} 
+                        onSelectUser={this.onSelectUser}/>)
 				}
 				{
 					chosenOne && <User item={chosenOne}/>
