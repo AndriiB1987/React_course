@@ -1,13 +1,13 @@
-export class UserService {
-    url = 'https://jsonplaceholder.typicode.com/users'
-    getAllUsers(){
+export class PostService {
+    url = 'https://jsonplaceholder.typicode.com/posts'
+    getAllPosts(){
 
 		return fetch(this.url)
 			.then(value => value.json())
 			.then(value => {return value;});
     }
 
-    getUserById(id){
+    getPostById(id){
         return fetch(`${this.url}/${id}`).then(value=>value.json()).then(value=>value);
 
     }

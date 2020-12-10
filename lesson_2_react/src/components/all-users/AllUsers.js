@@ -8,10 +8,13 @@ class AllUsers extends Component {
 
 	state = {users: [], chosenOne: null};
 
+	// onSelectUser = (id) => {
+	// 	let {users} = this.state;
+	// 	let find = users.find(value => value.id === id);
+	// 	this.setState({chosenOne: find});
+	// };
 	onSelectUser = (id) => {
-		let {users} = this.state;
-		let find = users.find(value => value.id === id);
-		this.setState({chosenOne: find});
+		this.userService.getUserById(id).then(value=> this.setState({chosenOne:value}))
 	};
 
 	render() {

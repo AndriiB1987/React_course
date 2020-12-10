@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
+import '../user/User.css';
 
 class User extends Component {
 	render() {
 		let {item, onSelectUser} = this.props;
 		return (
-
-
-			<div>
-				{item.id} - {item.name} -
+			<div className='myClass'>			
+			{item.id} - {item.name}
 				<button onClick={() => onSelectUser(item.id)}>chose</button>
 			</div>
 		);

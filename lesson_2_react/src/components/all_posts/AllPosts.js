@@ -1,16 +1,20 @@
 import React, {Component} from 'react';
 import Post from '../post/Post';
+import {PostService} from '../../services/PostService';
 
 class AllPosts extends Component {
 
+	postService = new PostService();
+
 	state = {posts: [], chosenOne: null};
 
+	// onSelectUser = (id) => {
+	// 	let {posts} = this.state;
+    //     let find = posts.find(value => value.id === id);
+	// 	this.setState({chosenOne: find});
+	// };
 	onSelectUser = (id) => {
-		let {posts} = this.state;
-        let find = posts.find(value => value.id === id);
-        //let body = find.value;
-		//console.log(body);
-		this.setState({chosenOne: find});
+		this.postService.getPostById(id).then(value=> this.setState({chosenOne:value}))
 	};
 
 	render() {
@@ -32,12 +36,8 @@ class AllPosts extends Component {
 	}
 
 	componentDidMount() {
-		console.log('componentDidMountPosts');
-		fetch('https://jsonplaceholder.typicode.com/posts')
-			.then(value => value.json())
-			.then(posts => {
-                this.setState({posts});
-			});
+		this.postService.getAllPosts().then(value=>this.setState({posts:value}));
+			
 	}
 }
 
