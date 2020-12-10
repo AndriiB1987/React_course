@@ -1,44 +1,26 @@
 import React, {Component} from 'react';
-import User from '../user/User';
-import {UserService} from '../../services/UserService';
+import Users from "./Users";
+import UserService from "../../services/user-service/UserService";
 
 class AllUsers extends Component {
+    state = {users: []};
+    userService = new UserService();
 
-	userService = new UserService();
+    async componentDidMount() {
+        let users = await this.userService.users()
+        this.setState({users})
+    }
 
-	state = {users: [], chosenOne: null};
-
-	// onSelectUser = (id) => {
-	// 	let {users} = this.state;
-	// 	let find = users.find(value => value.id === id);
-	// 	this.setState({chosenOne: find});
-	// };
-	onSelectUser = (id) => {
-		this.userService.getUserById(id).then(value=> this.setState({chosenOne:value}))
-	};
-
-	render() {
-		console.log('rend');
-		let {users, chosenOne} = this.state;
-		return (
-			<div>
-				{
-                    users.map(user => <User 
-                        item={user} 
-                        key={user.id} 
-                        onSelectUser={this.onSelectUser}/>)
-				}
-				{
-					chosenOne && <User item={chosenOne}/>
-				}
-
-			</div>
-		);
-	}
-
-	componentDidMount() {
-		this.userService.getAllUsers().then(value=>this.setState({users:value}));
-	}
+    render() {
+        let {users} = this.state;
+        return (
+            <div>
+                {
+                    users.map(value => <Users item={value} key={value.id}/>)
+                }
+            </div>
+        );
+    }
 }
 
 export default AllUsers;
