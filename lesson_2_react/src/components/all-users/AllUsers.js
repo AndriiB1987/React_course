@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import User from '../user/User';
+import {UserService} from '../../services/UserService';
 
 class AllUsers extends Component {
+
+	userService = new UserService();
 
 	state = {users: [], chosenOne: null};
 
@@ -31,12 +34,7 @@ class AllUsers extends Component {
 	}
 
 	componentDidMount() {
-		console.log('componentDidMount');
-		fetch('https://jsonplaceholder.typicode.com/users')
-			.then(value => value.json())
-			.then(users => {
-				this.setState({users});
-			});
+		this.userService.getAllUsers().then(value=>this.setState({users:value}));
 	}
 }
 
