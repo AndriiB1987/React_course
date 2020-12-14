@@ -23,9 +23,9 @@ class App extends Component {
                     </div>
 
                     <div className={'app-route'}>
-                        <Switch>
-                            <Route path={'/users'} render={() => {
-                                return (<AllUsers/>)
+                        <Switch>                        
+                            <Route path={'/users'} render={() => {                                
+                                return (<AllUsers/>)                               
                             }}/>
                             <Route path={'/posts'} render={() => {
                                 return (<AllPosts/>)
