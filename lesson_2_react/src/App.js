@@ -6,8 +6,12 @@ import {BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom';
 import './App.css'
 
 class App extends Component {
+	myForm = React.createRef();
+
+	state = {inputValue: ''};
     render() {
-        return (
+        return (			
+			
             <Router>
                 <div>
                     <div>
@@ -36,10 +40,28 @@ class App extends Component {
                         </Switch>
                     </div>
                 </div>
+				<div>
+
+				<form action={'/savedata'} onSubmit={this.send} ref={this.myForm}>
+					<input type='number' onInput={this.commitState} value={this.state.inputValue}/>
+					<button>send</button>
+				</form>
+
+			</div>
             </Router>
 
         );
-    }
+	}
+	send = (e) => {
+		e.preventDefault();
+		console.log(e.target.children[0].value);
+
+	};
+
+	commitState = (e) => {
+		this.setState({inputValue: e.target.value});
+
+	};
 }
 
 export default App;
