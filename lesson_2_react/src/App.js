@@ -1,67 +1,67 @@
 import React, {Component} from 'react';
-import AllUsers from "./components/all-users/AllUsers";
-import AllPosts from "./components/all-posts/AllPosts";
-import AllComments from "./components/all-comments/AllComments";
-import {BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom';
-import './App.css'
+import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import UserSearch from "./components/UserSearch";
+import PostsSearch from "./components/PostsSearch";
+import CommentsSearch from "./components/CommentsSearch";
+
 
 class App extends Component {
-	myForm = React.createRef();
+    state = {controlNumber: '', chosenNumber : null, maxInputValue : 10};
+    numberForm = React.createRef();
 
-	state = {inputValue: ''};
     render() {
-        return (			
-			
+        return (
             <Router>
-                <div>
+                <div className={'header'}>
+                    <h2>Choose what you need:</h2>
                     <div>
-                        <Link to={'/users'}>users</Link>
+                        <Link className={'navBtn'} to={'/user'} onClick={() => this.setMaxInputValue(10)}>User</Link>
+                        <Link className={'navBtn'} to={'/post'} onClick={() => this.setMaxInputValue(100)}>Post</Link>
+                        <Link className={'navBtn'} to={'/comment'} onClick={() => this.setMaxInputValue(500)}>Comment</Link>
                     </div>
-
-                    <div>
-                        <Link to={'/posts'}>posts</Link>
-                    </div>
-
-                    <div>
-                        <Link to={'/comments'}>comments</Link>
-                    </div>
-
-                    <div className={'app-route'}>
-                        <Switch>                        
-                            <Route path={'/users'} render={() => {                                
-                                return (<AllUsers/>)                               
-                            }}/>
-                            <Route path={'/posts'} render={() => {
-                                return (<AllPosts/>)
-                            }}/>
-                            <Route path={'/comments'} render={() => {
-                                return (<AllComments/>)
-                            }}/>
-                        </Switch>
-                    </div>
+                    <h2>Select or type ID</h2>
+                    <form ref={this.numberForm} onSubmit={this.chooseNumber}>
+                        <input type="number" min={1} max={this.state.maxInputValue} onInput={this.saveNumber} value={this.state.controlNumber}/>
+                        <button>Search</button>
+                    </form>
                 </div>
-				<div>
-
-				<form action={'/savedata'} onSubmit={this.send} ref={this.myForm}>
-					<input type='number' onInput={this.commitState} value={this.state.inputValue}/>
-					<button>send</button>
-				</form>
-
-			</div>
+                <Switch>
+                    <Route exact path={'/'} render={() => {
+                        return "Choose what you need"
+                    }}/>
+                    <Route exact path={'/user'} render={(props) => {
+                        return <UserSearch {...props} number={this.state.chosenNumber}/>
+                    }}/>
+                    <Route exact path={'/post'} render={(props) => {
+                        return <PostsSearch {...props} number={this.state.chosenNumber}/>
+                    }}/>
+                    <Route exact path={'/comment'} render={(props) => {
+                        return <CommentsSearch {...props} number={this.state.chosenNumber}/>
+                    }}/>
+                </Switch>
             </Router>
+    );
+    }
 
-        );
-	}
-	send = (e) => {
-		e.preventDefault();
-		console.log(e.target.children[0].value);
+    setMaxInputValue = (maxInputValue) => {
+        this.setState({controlNumber : ''})
+        this.setState({chosenNumber : null})
+        this.setState({maxInputValue})
+    }
+    saveNumber = (e) => {
+        this.setState({controlNumber : e.target.value})
+    }
 
-	};
-
-	commitState = (e) => {
-		this.setState({inputValue: e.target.value});
-
-	};
+    chooseNumber = (e) => {
+        e.preventDefault();
+        this.setState({chosenNumber : this.numberForm.current[0].value})
+    }
 }
 
 export default App;

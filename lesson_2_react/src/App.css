@@ -1,11 +1,16 @@
-.app-route {
-    border: 1px solid black;
-    box-sizing: border-box;
-    min-height: 50px;
+.header{
+    padding: 0 20px 20px;
+    border-bottom: 1px solid silver;
 }
-
-.app-route1 {
-    border: 1px solid rgb(190, 28, 28);
-    box-sizing: border-box;
-    min-height: 50px;
+.searchArea{
+    padding: 0 20px;
+}
+.navBtn{
+    padding: 5px;
+    border: 1px solid silver;
+    color: black;
+    text-decoration: none;
+    font-size: 20px;
+    border-radius: 3px;
+    margin-right: 10px;
 }
