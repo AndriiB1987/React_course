@@ -13,8 +13,8 @@ class CommentsSearch extends Component {
         const {comments} = this.state;
         const {number} = this.props;
         return (
-            <div className={'searchArea'}>
-                <h3>Comment</h3>
+            <div className={'area'}>
+                <h4>Write down Comment id and press "find" button</h4>
                 {number && <Comment number={number} elements={comments}/>}
             </div>
         );

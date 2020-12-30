@@ -14,8 +14,8 @@ class PostsSearch extends Component {
         const {posts} = this.state;
         const {number} = this.props;
         return (
-            <div className={'searchArea'}>
-                <h3>Post</h3>
+            <div className={'area'}>
+                <h4>Write down Post id and press "find" button</h4>
                 {number && <Post number={number} elements={posts}/>}
             </div>
         );

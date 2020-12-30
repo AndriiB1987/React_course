@@ -12,23 +12,25 @@ import CommentsSearch from "./components/CommentsSearch";
 
 
 class App extends Component {
-    state = {controlNumber: '', chosenNumber : null, maxInputValue : 10};
+    state = {controlNumber: '', chosenNumber : null, myMaxValue : 10};
     numberForm = React.createRef();
 
     render() {
         return (
             <Router>
                 <div className={'header'}>
-                    <h2>Choose what you need:</h2>
-                    <div>
-                        <Link className={'navBtn'} to={'/user'} onClick={() => this.setMaxInputValue(10)}>User</Link>
-                        <Link className={'navBtn'} to={'/post'} onClick={() => this.setMaxInputValue(100)}>Post</Link>
-                        <Link className={'navBtn'} to={'/comment'} onClick={() => this.setMaxInputValue(500)}>Comment</Link>
-                    </div>
-                    <h2>Select or type ID</h2>
+                        <div>
+                        <Link className={'myBtn'} to={'/user'} onClick={() => this.setmyMaxValue(10)}>User</Link>
+                        </div>
+                        <div>
+                        <Link className={'myBtn'} to={'/post'} onClick={() => this.setmyMaxValue(100)}>Post</Link>
+                        </div>
+                        <div>
+                        <Link className={'myBtn'} to={'/comment'} onClick={() => this.setmyMaxValue(500)}>Comment</Link>
+                        </div>
                     <form ref={this.numberForm} onSubmit={this.chooseNumber}>
-                        <input type="number" min={1} max={this.state.maxInputValue} onInput={this.saveNumber} value={this.state.controlNumber}/>
-                        <button>Search</button>
+                        <input type="number" min={1} max={this.state.myMaxValue} onInput={this.saveNumber} value={this.state.controlNumber}/>
+                        <button>find</button>
                     </form>
                 </div>
                 <Switch>
@@ -49,10 +51,10 @@ class App extends Component {
     );
     }
 
-    setMaxInputValue = (maxInputValue) => {
+    setmyMaxValue = (myMaxValue) => {
         this.setState({controlNumber : ''})
         this.setState({chosenNumber : null})
-        this.setState({maxInputValue})
+        this.setState({myMaxValue})
     }
     saveNumber = (e) => {
         this.setState({controlNumber : e.target.value})

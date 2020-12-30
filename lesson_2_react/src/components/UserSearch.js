@@ -14,8 +14,8 @@ class UserSearch extends Component {
         const {users} = this.state;
         const {number} = this.props;
         return (
-            <div className={'searchArea'}>
-                <h3>User</h3>
+            <div className={'area'}>
+                <h4>Write down User id and press "find" button</h4>
                 {number && <User number={number} elements={users}/>}
             </div>
         );
