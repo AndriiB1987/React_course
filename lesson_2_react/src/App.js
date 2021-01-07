@@ -1,69 +1,49 @@
-import React, {Component} from 'react';
 import './App.css';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-import UserSearch from "./components/UserSearch";
-import PostsSearch from "./components/PostsSearch";
-import CommentsSearch from "./components/CommentsSearch";
+import React, {useEffect, useState} from "react";
 
+export default function App() {
+    const [count, setCount] = useState(1);
+    const [user, setUser] = useState();
 
-class App extends Component {
-    state = {controlNumber: '', chosenNumber : null, myMaxValue : 10};
-    numberForm = React.createRef();
-
-    render() {
-        return (
-            <Router>
-                <div className={'header'}>
-                        <div>
-                        <Link className={'myBtn'} to={'/user'} onClick={() => this.setmyMaxValue(10)}>User</Link>
-                        </div>
-                        <div>
-                        <Link className={'myBtn'} to={'/post'} onClick={() => this.setmyMaxValue(100)}>Post</Link>
-                        </div>
-                        <div>
-                        <Link className={'myBtn'} to={'/comment'} onClick={() => this.setmyMaxValue(500)}>Comment</Link>
-                        </div>
-                    <form ref={this.numberForm} onSubmit={this.chooseNumber}>
-                        <input type="number" min={1} max={this.state.myMaxValue} onInput={this.saveNumber} value={this.state.controlNumber}/>
-                        <button>find</button>
-                    </form>
-                </div>
-                <Switch>
-                    <Route exact path={'/'} render={() => {
-                        return "Choose what you need"
-                    }}/>
-                    <Route exact path={'/user'} render={(props) => {
-                        return <UserSearch {...props} number={this.state.chosenNumber}/>
-                    }}/>
-                    <Route exact path={'/post'} render={(props) => {
-                        return <PostsSearch {...props} number={this.state.chosenNumber}/>
-                    }}/>
-                    <Route exact path={'/comment'} render={(props) => {
-                        return <CommentsSearch {...props} number={this.state.chosenNumber}/>
-                    }}/>
-                </Switch>
-            </Router>
-    );
+    const incrementCounter = () => setCount((prev) => prev + 1);
+    const decrementCounter = () => {
+        setCount((prev) => prev > 1 ? prev - 1 : prev)
     }
+    const cleanCounter = () => setCount(1);
 
-    setmyMaxValue = (myMaxValue) => {
-        this.setState({controlNumber : ''})
-        this.setState({chosenNumber : null})
-        this.setState({myMaxValue})
-    }
-    saveNumber = (e) => {
-        this.setState({controlNumber : e.target.value})
-    }
+    // url = 'https://jsonplaceholder.typicode.com'
+    useEffect(() => {
+        fetch(`https://jsonplaceholder.typicode.com/users/${count}`)
+            .then(value => value.json())
+            .then(value => setUser(value))
+    }, [count])
 
-    chooseNumber = (e) => {
-        e.preventDefault();
-        this.setState({chosenNumber : this.numberForm.current[0].value})
-    }
-}
-
-export default App;
+    return (
+        <div>
+            <h4>User {count}</h4>
+            <button onClick={incrementCounter}>+</button>
+            <button onClick={decrementCounter}>-</button>
+            <button onClick={cleanCounter}>Clear</button>
+            {!!user &&
+            (<div>
+                <p>{user.id} - {user.name} </p>
+            </div>)
+            }
+        </div>
+        
+    )}
+/* //     <div className={'header'}>
+//     <div>
+//     <Link className={'myBtn'} to={'/user'} onClick={() => this.setmyMaxValue(10)}>User</Link>
+//     </div>
+//     <div>
+//     <Link className={'myBtn'} to={'/post'} onClick={() => this.setmyMaxValue(100)}>Post</Link>
+//     </div>
+//     <div>
+//     <Link className={'myBtn'} to={'/comment'} onClick={() => this.setmyMaxValue(500)}>Comment</Link>
+//     </div>
+// <form ref={this.numberForm} onSubmit={this.chooseNumber}>
+//     <input type="number" min={1} max={this.state.myMaxValue} onInput={this.saveNumber} value={this.state.controlNumber}/>
+//     <button>find</button>
+// </form>
+// </div> */
